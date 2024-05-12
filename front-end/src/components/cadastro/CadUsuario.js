@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import styles from '../css/Cadastro.module.css';
 
-function Cadastro() {
+function CadUsuario() {
     const [nome, setNome] = useState('');
-    const [usuario, setUsuario] = useState('');
-    const [senha, setSenha] = useState('');
-    const [senha2, setSenha2] = useState('');
+    const [cpf, setCpf] = useState('');
+    const [endereco, setEndereco] = useState('');
     const [mensagem, setMensagem] = useState('');
     const [telefone, setTelefone] = useState('');
+    const [telefone2, setTelefone2] = useState('');
     const [email, setEmail] = useState('');
 
 
     function formatarNumeroTelefone(valor) {
+        
         const limpo = ('' + valor).replace(/\D/g, '');
         const correspondencia = limpo.match(/^(\d{0,2})(\d{0,5})(\d{0,4})$/);
         if (correspondencia) {
@@ -27,68 +28,52 @@ function Cadastro() {
       setTelefone(formatado);
     }
     };
+    const TrocaNumero2 = (e) => {
+        const valor = e.target.value;
+        if (valor.length <= 15) { // Verifica o comprimento total, incluindo a máscara
+          const formatado = formatarNumeroTelefone(valor);
+          setTelefone2(formatado);
+        }
+        };
 
     function validarEmail(email) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
     }
 
+    const formatarCPF = (cpf) => {
+    // Remove caracteres não numéricos
+    const numericCPF = cpf.replace(/\D/g, '');
+
+    // Aplica a formatação do CPF (###.###.###-##)
+    const cpfFormatado = numericCPF.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+
+    return cpfFormatado;
+    };
+
+    const trocaCpf = (event) => {
+        let novoCPF = event.target.value;
+
+    // Limita o comprimento do CPF a 14 caracteres
+    if (novoCPF.length <= 14) {
+      setCpf(formatarCPF(novoCPF));
+    }
+  };
+
     function cadastrarUsuario(e) {
         e.preventDefault();
-
-        if (senha !== senha2) {
-            setMensagem('Senhas não coincidem');
-            return;
-        }
-
-        if (senha.length < 6) {
-            setMensagem('Insira uma senha com pelo menos 6 caracteres');
-            return;
-        }
         if (!validarEmail(email)) {
             setMensagem('Insira um email válido');
             return; 
         }
+        if (cpf.length < 14){
+            setMensagem('Insira um CPF válido');
+            return;
+        } 
         if(telefone.length < 15){
             setMensagem('Insira um telefone válido');
             return;
         }
-        // Preparar os dados a serem enviados
-        const formData = {
-            nome,
-            usuario,
-            senha,
-            email,
-            telefone
-        };
-        
-        // Enviar dados para o Flask via requisição POST
-        fetch('/tecnico', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        })
-        .then(response => {
-            if (response.ok) {
-                // Limpar campos e exibir mensagem de sucesso
-                setNome('');
-                setUsuario('');
-                setSenha('');
-                setSenha2('');
-                setTelefone ('');
-                setEmail ('');
-                setMensagem('Tecnico cadastrado com sucesso!');
-            } else {
-                // Exibir mensagem de erro caso a requisição falhe
-                setMensagem('Erro ao cadastrar tecnico. Tente novamente.');
-            }
-        })
-        .catch(error => {
-            console.error('Erro ao cadastrar tecnico:', error);
-            setMensagem('Erro ao cadastrar tecnico. Tente novamente.');
-        });
     }
 
     return (
@@ -98,7 +83,7 @@ function Cadastro() {
             </header>
 
             <form className={styles.form} onSubmit={cadastrarUsuario}>
-                <h1>CADASTRO DE USUARIO</h1>
+                <h1>CADASTRO DE CLIENTE</h1>
                 <div className={styles.inputcontainer}>
                     <div className={styles.inputgroup}>
                         <p className={styles.namegroup}>NOME</p>
@@ -110,15 +95,16 @@ function Cadastro() {
                             onChange={e => setNome(e.target.value)}
                             required
                         />
-                        <p className={styles.namegroup}> SENHA</p>
+                        <p className={styles.namegroup}>ENDERECO</p>
                         <input
-                            type="password"
+                            type="text"
                             className={styles.input}
-                            placeholder="Digite a senha"
-                            value={senha}
-                            onChange={e => setSenha(e.target.value)}
+                            placeholder="Digite o endereco"
+                            value={endereco}
+                            onChange={e => setEndereco(e.target.value)}
                             required
                         />
+                        
                         <p className={styles.namegroup}>EMAIL</p>
                         <input type="text"
                         className={styles.input} 
@@ -128,22 +114,13 @@ function Cadastro() {
                         required/>
                     </div>
                     <div className={styles.inputgroup}>
-                        <p className={styles.namegroup}>USUARIO</p>
+                        <p className={styles.namegroup}>CPF</p>
                         <input
                             type="text"
                             className={styles.input}
-                            placeholder="Digite o usuário"
-                            value={usuario}
-                            onChange={e => setUsuario(e.target.value)}
-                            required
-                        />
-                        <p className={styles.namegroup}>CONFIRME SUA SENHA</p>
-                        <input
-                            type="password"
-                            className={styles.input}
-                            placeholder="Confirme a senha"
-                            value={senha2}
-                            onChange={e => setSenha2(e.target.value)}
+                            placeholder="Digite o CPF"
+                            value={cpf}
+                            onChange={trocaCpf}
                             required
                         />
                         <p className={styles.namegroup}>TELEFONE</p>
@@ -153,6 +130,16 @@ function Cadastro() {
                             placeholder="(XX) XXXXX-XXXX"
                             value={telefone}
                             onChange={TrocaNumero}
+                            maxLength={15}
+                            required
+                        />
+                        <p className={styles.namegroup}>TELEFONE SECUNDARIO</p>
+                        <input
+                            type="text"
+                            className={styles.input}
+                            placeholder="(XX) XXXXX-XXXX"
+                            value={telefone2}
+                            onChange={TrocaNumero2}
                             maxLength={15}
                             required
                         />
@@ -169,4 +156,4 @@ function Cadastro() {
     );
 }
 
-export default Cadastro;
+export default CadUsuario;

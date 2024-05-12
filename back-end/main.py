@@ -142,7 +142,7 @@ def cadastrar_tecnico():
     estabelecimento_id = current_user.id
     try:
         Tecnico.create(nome = nome, usuario = usuario, senha = senha , estabelecimento_id =  estabelecimento_id, email = email, telefone = telefone)
-        return jsonify({'message': 'Usuario cadastrado com sucesso'}), 200
+        return jsonify({'message': data}), 200
     
     except IntegrityError as e:
         return jsonify({'message': 'Erro de integridade: já existe um tecnico com este usuario.'}), 400

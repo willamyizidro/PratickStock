@@ -1,152 +1,91 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import styles from '../css/Login.module.css';
-import { RiLockPasswordLine } from 'react-icons/ri';
-import { FiUser } from 'react-icons/fi';
-import { FaBuilding } from 'react-icons/fa';
 
 function Login() {
-  const handleChange = (event) => {
-    let { value } = event.target;
+    const [username, setUsuario] = useState('');
+    const [password, setSenha] = useState('');
+    const [mensagem, setMensagem] = useState('');
+   
+    function logar(e) {
+        e.preventDefault();
 
-    value = value.replace(/\D/g, '');
-    value = value.slice(0, 14);
-
-    if (value.length <= 2) {
-        value = value.replace(/^(\d{0,2})/, '$1');
-      } else if (value.length <= 5) {
-        value = value.replace(/^(\d{0,2})(\d{0,3})/, '$1.$2');
-      } else if (value.length <= 8) {
-        value = value.replace(/^(\d{0,2})(\d{0,3})(\d{0,3})/, '$1.$2.$3');
-      } else if (value.length <= 12) {
-        value = value.replace(/^(\d{0,2})(\d{0,3})(\d{0,3})(\d{0,4})/, '$1.$2.$3/$4');
-      } else {
-        value = value.replace(/^(\d{0,2})(\d{0,3})(\d{0,3})(\d{0,4})(\d{0,2})/, '$1.$2.$3/$4-$5');
+        if (password.length < 6) {
+            setMensagem('Insira uma senha com pelo menos 6 caracteres');
+            return;
+        }
+        // Preparar os dados a serem enviados
+        const formData = {
+            username,
+            password
+        };
         
-      }
-
-      setUsername(value);
-  };
-  
-  const history = useHistory();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [tipoLogin, setTipoLogin] = useState('Funcionario');
-  const [mensagem, setMensagem] = useState('');
-
-  const login = async (e) => {
-    e.preventDefault(); // Evita o comportamento padrão de submit do formulário
-
-    const formData = {
-      username,
-      password,
-    };
-
-    try {
-      const response = await fetch('/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        const tipoUsuario = data.tipoUsuario;
-
-        if (tipoUsuario === 'estabelecimento') {
-          history.push('/cadastro');
-          window.location.reload();
-        } 
-      } else {
-        setMensagem('Verifique seus dados.');
-      }
-    } catch (error) {
-      console.error('Erro ao logar:', error);
-      setMensagem('Ocorreu um erro ao processar o login.');
+        // Enviar dados para o Flask via requisição POST
+        fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => {
+            if (response.ok) {
+                // Limpar campos e exibir mensagem de sucesso
+                setUsuario('');
+                setSenha('');
+                setMensagem('Erro ao logar');
+            } else {
+                // Exibir mensagem de erro caso a requisição falhe
+                setMensagem('Erro ao logar, verifique seus dados.');
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao logar:', error);
+            setMensagem('Erro ao logar, verifique seus dados.');
+        });
     }
-  };
 
-  const trocaUsuario = (opcao) => {
-    setUsername('');
-    setPassword('');
-    if (tipoLogin === opcao) {
-      setTipoLogin(null);
-    } else {
-      setTipoLogin(opcao);
-    }
-  };
-
-  return (
-    <div>
-      <form className={styles.form} onSubmit={login}>
-        <h1>Logar como:</h1>
-        <label className={styles.labelgroup}>
-          <input
-            className={styles.checkboxgoup}
-            type="checkbox"
-            checked={tipoLogin === 'Funcionario'}
-            onChange={(e) => trocaUsuario('Funcionario')}
-          />
-          Funcionário
-        </label>
-        <label className={styles.labelgroup}>
-          <input
-            className={styles.checkboxgoup}
-            type="checkbox"
-            checked={tipoLogin === 'Empresa'}
-            onChange={(e) => trocaUsuario('Empresa')}
-          />
-          Empresa
-        </label>
-
-        <div className={styles.inputcontainer}>
-          <div className={styles.inputgroup}>
-            {tipoLogin === 'Funcionario' && (
-            <>
-            <p className={styles.namegroup}><FiUser /> Login:</p>
-            <input
-              type="text"
-              className={styles.input}
-              placeholder="Digite seu login"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required/>
-            </>
-          )}
-            {tipoLogin === 'Empresa' && (
-            <>
-            <p className={styles.namegroup}><FaBuilding /> CNPJ:</p>
-              <input type="text" 
-              className={styles.input}
-              placeholder="Digite seu CNPJ"
-              value={username} 
-              onChange={handleChange}
-              required/>
-              </>
-            )}
-
-            <p className={styles.namegroup}><RiLockPasswordLine /> Senha:</p>
-            <input
-              type="password"
-              className={styles.input}
-              placeholder="Digite sua senha"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-        </div>
+    return (
         <div>
-          <p>{mensagem}</p>
+            <div className={styles.divLateral}>
+            <form className={styles.form} onSubmit={logar}>
+                <h1>LOGIN</h1>
+                <div className={styles.inputcontainer}>
+                    <div className={styles.inputgroup}>
+                        <p className={styles.namegroup}>USUARIO</p>
+                        <input
+                            type="text"
+                            className={styles.input}
+                            placeholder="Digite o usuário"
+                            value={username}
+                            onChange={e => setUsuario(e.target.value)}
+                            required
+                        />
+                        <p className={styles.namegroup}> SENHA</p>
+                        <input
+                            type="password"
+                            className={styles.input}
+                            placeholder="Digite a senha"
+                            value={password}
+                            onChange={e => setSenha(e.target.value)}
+                            required
+                        />
+                        
+                    </div>
+                </div>
+                <div>
+                    <p>{mensagem}</p>
+                </div>
+                <div>
+                    <input className={styles.bottomgroup} type="submit" value="ENTRAR" />
+                </div>
+            </form>
+            <div className={styles.footer}>
+            <p>Direitos autorais © 2024 PRATIC STOCK. Todos os direitos reservados. Alunosuepb é uma marca registrada.</p>
+            <p><a href="#">Termos de Uso</a> | <a href="#">Política de Privacidade</a> | <a href="#">Contato</a></p>
+            </div>
+            </div>
         </div>
-        <div>
-          <input className={styles.bottomgroup} type="submit" value="Logar" />
-        </div>
-      </form>
-    </div>
-  );
+    );
 }
 
 export default Login;
