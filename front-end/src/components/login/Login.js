@@ -2,10 +2,34 @@ import React, { useState } from 'react';
 import styles from '../css/Login.module.css';
 
 function Login() {
+
+    const handleChange = (event) => {
+        let { value } = event.target;
+    
+        value = value.replace(/\D/g, '');
+        value = value.slice(0, 14);
+    
+        if (value.length <= 2) {
+            value = value.replace(/^(\d{0,2})/, '$1');
+          } else if (value.length <= 5) {
+            value = value.replace(/^(\d{0,2})(\d{0,3})/, '$1.$2');
+          } else if (value.length <= 8) {
+            value = value.replace(/^(\d{0,2})(\d{0,3})(\d{0,3})/, '$1.$2.$3');
+          } else if (value.length <= 12) {
+            value = value.replace(/^(\d{0,2})(\d{0,3})(\d{0,3})(\d{0,4})/, '$1.$2.$3/$4');
+          } else {
+            value = value.replace(/^(\d{0,2})(\d{0,3})(\d{0,3})(\d{0,4})(\d{0,2})/, '$1.$2.$3/$4-$5');
+            
+          }
+    
+          setUsuario(value);
+      };
+
     const [username, setUsuario] = useState('');
     const [password, setSenha] = useState('');
     const [mensagem, setMensagem] = useState('');
-   
+    const [tipoLogin, setTipoLogin] = useState('Funcionario');
+
     function logar(e) {
         e.preventDefault();
 
@@ -32,7 +56,7 @@ function Login() {
                 // Limpar campos e exibir mensagem de sucesso
                 setUsuario('');
                 setSenha('');
-                setMensagem('Erro ao logar');
+                setMensagem('Sucesso ao logar');
             } else {
                 // Exibir mensagem de erro caso a requisição falhe
                 setMensagem('Erro ao logar, verifique seus dados.');
@@ -44,22 +68,66 @@ function Login() {
         });
     }
 
+    const trocaUsuario = (opcao) => {
+        setUsuario('');
+        setSenha('');
+        if (tipoLogin === opcao) {
+          setTipoLogin(null);
+        } else {
+          setTipoLogin(opcao);
+        }
+      };
+
+
     return (
         <div>
             <div className={styles.divLateral}>
             <form className={styles.form} onSubmit={logar}>
                 <h1>LOGIN</h1>
-                <div className={styles.inputcontainer}>
-                    <div className={styles.inputgroup}>
-                        <p className={styles.namegroup}>USUARIO</p>
-                        <input
-                            type="text"
-                            className={styles.input}
-                            placeholder="Digite o usuário"
-                            value={username}
-                            onChange={e => setUsuario(e.target.value)}
-                            required
-                        />
+                <label className={styles.labelgroup}>
+          <input
+            className={styles.checkboxgoup}
+            type="checkbox"
+            checked={tipoLogin === 'Funcionario'}
+            onChange={(e) => trocaUsuario('Funcionario')}
+          />
+          Funcionário
+        </label>
+        <label className={styles.labelgroup}>
+          <input
+            className={styles.checkboxgoup}
+            type="checkbox"
+            checked={tipoLogin === 'Empresa'}
+            onChange={(e) => trocaUsuario('Empresa')}
+          />
+          Empresa
+        </label>
+
+        <div className={styles.inputcontainer}>
+          <div className={styles.inputgroup}>
+            {tipoLogin === 'Funcionario' && (
+            <>
+            <p className={styles.namegroup}>Login:</p>
+            <input
+              type="text"
+              className={styles.input}
+              placeholder="Digite seu login"
+              value={username}
+              onChange={(e) => setUsuario(e.target.value)}
+              required/>
+            </>
+          )}
+            {tipoLogin === 'Empresa' && (
+            <>
+            <p className={styles.namegroup}>CNPJ:</p>
+              <input type="text" 
+              className={styles.input}
+              placeholder="Digite seu CNPJ"
+              value={username} 
+              onChange={handleChange}
+              required/>
+              </>
+            )}
                         <p className={styles.namegroup}> SENHA</p>
                         <input
                             type="password"

@@ -125,3 +125,14 @@ h1{
 .footer{
     color: white;
 }
+
+.checkboxgoup{
+    background-color: #2980b9;
+    transform: scale(1.1);
+}
+.labelgroup{
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 18px;
+   
+}
