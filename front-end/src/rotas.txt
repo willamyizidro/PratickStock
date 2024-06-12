@@ -1,0 +1,3 @@
+/cadEstabelecimento cadastro de estabelecimento
+/cadastrar cadastro de tecnico
+/cadastro cadastro de cliente

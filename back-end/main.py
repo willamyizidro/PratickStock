@@ -163,6 +163,11 @@ def cadastrar_tecnico():
 def cadastro():
     return render_template('index.html')
 
+@app.route('/cadastrar', methods=['GET'])
+@login_required
+@estabelecimento_required
+def cadastrar():
+    return render_template('index.html')
 
 
 @app.route('/listausuarios', methods=['GET'])
@@ -179,6 +184,110 @@ def infusuario():
     nome = usuario.nome
     tipo = usuario.role
     return jsonify({'nome': nome,'tipo':tipo}), 200
+
+
+@app.route('/os', methods=['POST'])
+@login_required
+def cadastroOs():
+    usuario = load_user(current_user.id)
+    idEst = obterIdEst(usuario)
+    # idEst = '7fc02bd3-d683-45e2-b073-4fdbb0d6b6a5'
+    data = request.get_json()
+    nomeTec = data['nome']
+    tecnico = Tecnico.get(nome = nomeTec)
+    cpf = data['cpf']
+    cliente = Cliente.get(cpf = cpf)
+    datainicial = data['datainicial']
+    datafinal = data['datafinal']
+    modelo = data['modelo']
+    imei = data['imei']
+    valorServ = data['valorservico']
+    valorPeça = data['valorpeca']
+    valorTotal = valorServ + valorPeça
+    checklist = obterCheckList(data['checklist'])
+    os = (Os.create(
+        tecnico_id = tecnico.id,
+        estabelecimento_id = idEst,
+        dataInicial = datainicial,
+        dataFinal = datafinal,
+        modeloAparelho =modelo,
+        imei = imei,
+        valorServico = valorServ,
+        valorPeça = valorPeça,
+        valorTotal = valorTotal,
+        checkList_id = checklist.id,
+        cliente_id = cliente.id
+
+    ))
+    return jsonify({'message': 'os adicionada com sucesso !'}), 200
+
+
+@app.route('/cliente', methods=['GET'])
+@login_required
+def obterClientes():
+    usuario = load_user(current_user.id)
+    idEst = obterIdEst(usuario)
+    consulta = Cliente.select().where(Cliente.estabelecimento_id == idEst).order_by(Cliente.nome.asc())
+    lista = []
+    if consulta:
+        for cliente in consulta:
+            data = ({
+                "nome": cliente.nome,
+                "cpf": cliente.cpf
+            })
+            lista.append(data)
+        return data, 200
+    else: 
+        return jsonify({'message': 'nao foram encontrados clientes !'}), 400
+    
+
+@app.route('/cliente', methods=['POST'])
+@login_required
+def cadastroCliente():
+    usuario = load_user(current_user.id)
+    idEst = obterIdEst(usuario)
+    # idEst = '7fc02bd3-d683-45e2-b073-4fdbb0d6b6a5'
+    data = request.get_json()
+    telefoneSec = data['telefoneSec']
+    telefone = data['telefone']
+    cpf = data['cpf']
+    nome = data['nome']
+    endereco = data['endereco']
+    email = data['email']
+    try:
+        Cliente.create(nome = nome, endereco = endereco, email = email, cpf = cpf, telefone = telefone, telefoneSec = telefoneSec, estabelecimento_id = idEst)
+        return jsonify({'message': 'cliente adicionado com sucesso !'}), 200
+    except:
+        return jsonify({'message': 'ocorreu algum erro ao salvar o cliente !'}), 400
+
+
+
+
+
+
+@app.route('/tecnico', methods=['GET'])
+@login_required
+def obterTecnicos():
+    usuario = load_user(current_user.id)
+    idEst = obterIdEst(usuario)
+
+    consulta = Tecnico.select().where(Tecnico.estabelecimento_id == idEst).order_by(Tecnico.nome.asc())
+    lista = []
+    if consulta:
+        for tecnico in consulta:
+            data = ({
+                'nome' : tecnico.nome
+            })
+            lista.append(data)
+        return lista
+    else:
+        return jsonify({'message': 'não foi encontrado nenhum tecnico cadastrado'}), 400
+
+
+
+
+
+
 
 
 

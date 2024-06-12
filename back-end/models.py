@@ -4,15 +4,27 @@ from decimal import Decimal
 from peewee import *
 import re
 
-
-
+# BANCO DE DADOS LOCAL
 DATABASE = {
     'name': 'PratickStock',
     'user': 'postgres',
     'password': 'postgres',
-    'host': 'localhost',  # ou o endereço do seu servidor PostgreSQL
-    'port': 5432,          # a porta padrão do PostgreSQL é 5432
+    'host': 'localhost',  
+    'port': 5432,     
 }
+
+# servidor supabase
+# DATABASE = {
+#     'name': 'postgres',
+#     'user': 'postgres.ormgrjxzrnttgdcwxaeq',
+#     'password': 'PratickStock',
+#     'host': 'aws-0-us-east-1.pooler.supabase.com',  
+#     'port': 5432,          
+# }
+
+
+
+
 
 database = PostgresqlDatabase(
     DATABASE['name'],
@@ -72,10 +84,84 @@ class Tecnico(BaseModel, UserMixin):
     def getNome(self):
         return self.nome
 
+class Cliente(BaseModel):
+    id = AutoField()
+    nome = CharField(max_length=100)
+    endereco = CharField(max_length=200)
+    email = CharField(max_length=100)
+    cpf = CharField(max_length=14)
+    telefone = CharField(max_length=15)
+    telefoneSec = CharField(max_length=15)
+    estabelecimento_id = ForeignKeyField(Estabelecimento, backref='clientes')
+
+    def getNome(self):
+        return self.nome
+
+
+class CheckList(BaseModel):
+    id = AutoField()
+    camerafrontal = BooleanField(default=False)
+    cameratraseira= BooleanField(default=False)
+    altofalante= BooleanField(default=False)
+    microfone= BooleanField(default=False)
+    foneauricular= BooleanField(default=False)
+    carregamento= BooleanField(default=False)
+    vidro= BooleanField(default=False)
+    touch= BooleanField(default=False)
+    tela = BooleanField(default=False)
+    botaodeligar= BooleanField(default=False)
+    botoesdevolume= BooleanField(default=False)
+    botaohome= BooleanField(default=False)
+    wifi= BooleanField(default=False)
+    bluethooth= BooleanField(default=False)
+    sinalderede= BooleanField(default=False)
+
+
+
+
+
+class Os(BaseModel):
+    id = AutoField()
+    tecnico_id = ForeignKeyField(Tecnico, backref='os')
+    estabelecimento_id = ForeignKeyField(Estabelecimento, backref='os')
+    dataInicial = DateField()
+    dataFinal= DateField()
+    modeloAparelho = CharField(max_length=30)
+    imei = CharField(max_length=50)
+    valorServico = DoubleField()
+    valorPeça = DoubleField()
+    valorTotal = DoubleField()
+    checkList_id = ForeignKeyField(CheckList, backref='os')
+    cliente_id = ForeignKeyField(Cliente, backref='os')
+
+
+
+
+    
+def obterCheckList(data):
+    check = (CheckList.create(
+    camerafrontal = data['camerafrontal'],
+    cameratraseira= data['cameratraseira'],
+    altofalante= data['altofalante'],
+    microfone= data['microfone'],
+    foneauricular= data['foneauricular'],
+    carregamento= data['carregamento'],
+    vidro= data['vidro'],
+    touch= data['touch'],
+    tela = data['tela'],
+    botaodeligar= data['botaodeligar'],
+    botoesdevolume= data['botoesdevolume'],
+    botaohome= data['botaohome'],
+    wifi= data['wifi'],
+    bluethooth= data['bluethooth'],
+    sinalderede= data['sinalderede']
+    ))
+    return check
+
 # Inicialize o banco de dados e crie tabelas
 def create_tables():
     with database:
-        database.create_tables([Estabelecimento, Tecnico])
+        database.create_tables([Estabelecimento, Tecnico, Cliente, CheckList, Os])
 
 
 def obterIdEst(usuario):
@@ -83,3 +169,5 @@ def obterIdEst(usuario):
         return usuario.id
     else:
         return usuario.estabelecimento_id
+    
+
