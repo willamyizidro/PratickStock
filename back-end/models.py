@@ -8,8 +8,8 @@ import re
 DATABASE = {
     'name': 'PratickStock',
     'user': 'postgres',
-    'password': 'postgres',
-    'host': 'localhost',  
+    'password': '123456',
+    #'host': 'localhost',  
     'port': 5432,     
 }
 
@@ -30,7 +30,7 @@ database = PostgresqlDatabase(
     DATABASE['name'],
     user=DATABASE['user'],
     password=DATABASE['password'],
-    host=DATABASE['host'],
+    #host=DATABASE['host'],
     port=DATABASE['port']
 )
 
@@ -119,7 +119,6 @@ class CheckList(BaseModel):
 
 
 
-
 class Os(BaseModel):
     id = AutoField()
     tecnico_id = ForeignKeyField(Tecnico, backref='os')
@@ -131,6 +130,8 @@ class Os(BaseModel):
     valorServico = DoubleField()
     valorPeça = DoubleField()
     valorTotal = DoubleField()
+    relato_cliente = TextField()
+    diagnostico_tecnico = TextField()
     checkList_id = ForeignKeyField(CheckList, backref='os')
     cliente_id = ForeignKeyField(Cliente, backref='os')
 
@@ -140,21 +141,21 @@ class Os(BaseModel):
     
 def obterCheckList(data):
     check = (CheckList.create(
-    camerafrontal = data['camerafrontal'],
-    cameratraseira= data['cameratraseira'],
-    altofalante= data['altofalante'],
-    microfone= data['microfone'],
-    foneauricular= data['foneauricular'],
-    carregamento= data['carregamento'],
-    vidro= data['vidro'],
-    touch= data['touch'],
-    tela = data['tela'],
-    botaodeligar= data['botaodeligar'],
-    botoesdevolume= data['botoesdevolume'],
-    botaohome= data['botaohome'],
-    wifi= data['wifi'],
-    bluethooth= data['bluethooth'],
-    sinalderede= data['sinalderede']
+    camerafrontal = data['Camera Frontal'],
+    cameratraseira= data['Camera Traseira'],
+    altofalante= data['Alto Falante'],
+    microfone= data['Microfone'],
+    foneauricular= data['Fone auricular'],
+    carregamento= data['Carregamento'],
+    vidro= data['Vidro'],
+    touch= data['Touch'],
+    tela = data['Tela'],
+    botaodeligar= data['Botao power'],
+    botoesdevolume= data['Botao volume'],
+    botaohome= data['Botao home'],
+    wifi= data['Wifi'],
+    bluethooth= data['Bluethooth'],
+    sinalderede= data['Sinal de rede']
     ))
     return check
 

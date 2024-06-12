@@ -204,6 +204,8 @@ def cadastroOs():
     valorServ = data['valorservico']
     valorPeça = data['valorpeca']
     valorTotal = valorServ + valorPeça
+    relato = data['relato_cliente']
+    diagnostico = data['diagnostico']
     checklist = obterCheckList(data['checklist'])
     os = (Os.create(
         tecnico_id = tecnico.id,
@@ -215,6 +217,8 @@ def cadastroOs():
         valorServico = valorServ,
         valorPeça = valorPeça,
         valorTotal = valorTotal,
+        relato_cliente = relato,
+        diagnostico_tecnico = diagnostico,
         checkList_id = checklist.id,
         cliente_id = cliente.id
 
