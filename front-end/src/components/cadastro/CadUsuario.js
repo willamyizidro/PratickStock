@@ -74,14 +74,43 @@ function CadUsuario() {
             setMensagem('Insira um telefone válido');
             return;
         }
+        const formData = {
+            nome,
+            cpf,
+            endereco,
+            telefone,
+            telefoneSec: telefone2,
+            email
+        };
+    
+        fetch('/cliente', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => {
+            if (response.ok) {
+                setNome('');
+                setCpf('');
+                setEmail('');
+                setEndereco('');
+                setTelefone('');
+                setTelefone2('');
+            } else {
+                setMensagem('Erro ao cadastrar usuário. Tente novamente.');
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao cadastrar usuário:', error);
+            setMensagem('Erro ao cadastrar usuário. Tente novamente.');
+        });
     }
 
     return (
         <div>
-            <header className={styles.Header}>
-                <div className={styles.titulo}>PraticStock</div>
-            </header>
-
+        
             <form className={styles.form} onSubmit={cadastrarUsuario}>
                 <h1>CADASTRO DE CLIENTE</h1>
                 <div className={styles.inputcontainer}>

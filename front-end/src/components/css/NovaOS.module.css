@@ -1,0 +1,265 @@
+@font-face {
+    font-family: 'Poppins Medium';
+    src: url('../../../public/fonts/Poppins-Medium.ttf') format('truetype'); /* Ajuste o caminho conforme necessário */
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'DM Sans Regular';
+    src: url('../../../public/fonts/DMSans-Regular.ttf') format('truetype'); /* Ajuste o caminho conforme necessário */
+    font-weight: normal;
+    font-style: normal;
+}
+
+.divPrinc{
+    width: 80%;
+    margin: auto;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    background-color: #575f6869; 
+    border-radius:3px; 
+    padding:1em;
+    justify-content: center;
+    border-radius: 50px;
+    padding: 50px; 
+    flex-wrap: wrap;
+    
+    
+}
+.tablediv{
+    max-height: 300px; 
+    overflow-y: auto;
+    display: flex;
+    justify-content: center; /* Alinha o conteúdo horizontalmente no centro */
+    align-items: center;
+    background-color: rgb(150, 150, 150);
+}
+body{
+    background-color: #000000;
+}
+.tabela{
+    background-color: rgb(150, 150, 150);
+    max-height: 300px; /* Defina a altura máxima desejada para a tabela */
+    overflow-y: auto; /* Adiciona uma barra de rolagem vertical */
+}
+.divPrinc > ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap; /* Permitir que as mesas quebrem para a próxima linha */
+    justify-content: center; /* Alinhar as mesas no centro horizontalmente */
+}
+  
+.divPrinc > ul > div {
+    width: 80px;
+    flex: 0 0 calc(22% - 20px); /* Calculando o tamanho para 4 mesas por linha */
+    margin: 20px;
+    height: 100px;
+}
+
+.listaMesas {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center; 
+}
+
+.namegroup{
+    font-size: large;
+    text-align: left;
+    margin-bottom: 0%;
+    font-family: 'DM Sans Regular', sans-serif;
+    color: white;
+    font-size: 80%;
+    white-space: nowrap; /* Impede que o texto quebre em várias linhas */
+    overflow: hidden; /* Oculta o texto que ultrapassa o tamanho da div */
+    text-overflow: ellipsis; /* Exibe reticências (...) quando o texto é cortado */
+}
+.namegroup2{
+    font-size: large;
+    text-align: left;
+    margin-bottom: 0%;
+    margin-left: 4%;
+    font-family: 'DM Sans Regular', sans-serif;
+    color: white;
+    font-size: 80%;
+    white-space: nowrap; /* Impede que o texto quebre em várias linhas */
+    overflow: hidden; /* Oculta o texto que ultrapassa o tamanho da div */
+    text-overflow: ellipsis; /* Exibe reticências (...) quando o texto é cortado */
+}
+
+.inputgroup{
+    width: calc(50% - 10px);
+    margin-bottom: 10px;
+}
+
+.input{
+    background-color:#000000;
+    border: 1px solid #ffffff; 
+    padding: 8px; 
+    width: 100%;
+    height: 30px;
+    font-size: 14px;
+    color: white;
+}
+.inputclick{
+    background-color:#000000;
+    border: 1px solid #ffffff; 
+    padding: 8px; 
+    width: 100%;
+    height: 30px;
+    font-size: 14px;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+}
+.inputclick:hover {
+    background-color:  #161616;
+}
+
+.inputclick:active {
+    background-color: #252525;
+}
+.input2{
+    background-color:#000000;
+    border: 1px solid #ffffff; 
+    padding: 8px; 
+    width: 90%;
+    height: 200px;
+    font-size: 14px;
+    color: white;
+}
+.inputlist{
+    background-color:#000000;;
+    border: 1px solid #ffffff;  
+    padding: 8px; 
+    color: white;
+    width: 105%;
+    font-size: 14px;
+    height: 48px;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+h1{
+    font-family: 'Poppins Medium', sans-serif;
+    color: white;
+    font-size: 31,3px;
+    text-align: center;
+}
+.divInterna{
+    width: 100%;
+    margin-top: 0%;
+    margin: 20px;
+    align-items: center;
+    display: flex;
+    
+}
+
+.bottomgroup{
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    width: 200px;
+    height: 60px;
+    font-size: x-large;
+    transition: background-color 0.3s ease;
+    font-family: 'Poppins Bold', sans-serif;
+    color: black;
+}
+.bottomgroup:hover {
+    background-color:  #797979;
+}
+
+.bottomgroup:active {
+    background-color: #5c5c5c;
+}
+.item{
+    font-size: larger;
+}
+.bottomcheck{
+    background-color: #b6b6b6;
+    border: 1px solid #000000;
+    font-size: x-large;
+    transition: background-color 0.3s ease;
+    font-family: 'Poppins Bold', sans-serif;
+    color: black;
+    width: 100px;
+    height: 40px;
+}
+.bottomcheck:hover {
+    background-color:  #797979;
+}
+
+.bottomcheck:active {
+    background-color: #5c5c5c;
+}
+.botaodiv{
+    text-align: center;
+    align-items: center;
+}
+.fullScreenModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Adiciona um fundo escuro translúcido */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; 
+}
+  
+.modalContent {
+    width: 30%;
+    margin: auto;
+    margin-top: 8%;
+    margin-bottom: 5%;
+    flex-direction: column;
+    background-color: #575f68; 
+    border-radius:3px; 
+    padding:1em;
+    justify-content: center;
+    border-radius: 50px;
+    padding: 20px; 
+    display: flex;
+}
+.bottomgroupmodal{
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    width: 120px;
+    height: 40px;
+    font-size: 15px;
+    transition: background-color 0.3s ease;
+    font-family: 'Poppins Bold', sans-serif;
+    color: black;
+    margin-left: 2%;
+}
+.bottomgroupmodal:hover {
+    background-color:  #797979;
+}
+  
+.bottomgroupmodal:active {
+    background-color: #5c5c5c;
+}
+
+.botoes{
+    padding: 2%;
+    margin-top: 2%;
+    text-align: center;
+    align-items: center;
+}
+   
+.mensage{
+    font-size:large;
+    text-align: center;
+    color: white;
+    white-space: nowrap; /* Impede que o texto quebre em várias linhas */
+    overflow: hidden; /* Oculta o texto que ultrapassa o tamanho da div */
+    text-overflow: ellipsis; /* Exibe reticências (...) quando o texto é cortado */
+   
+}

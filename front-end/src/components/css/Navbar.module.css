@@ -1,0 +1,201 @@
+body{
+  background-color: #000000;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 0%; 
+}
+  
+li {  
+  transition: background-color 0.3s ease;
+}
+  
+li:hover {
+  background-color: #888888;
+}
+  
+.submenu {
+  width: 100%;
+  display: none; 
+  height: 0; 
+  overflow: hidden; 
+  transition: height 0.3s ease; 
+  margin-top: 5%;
+}
+  
+li:hover .submenu {
+  
+  display: block; 
+  height: auto; 
+}
+
+.Button {
+  width: 100%; 
+  margin: 0;
+  height: 100%; 
+  padding: 10px;
+  border: none;
+  background-color: #ffffff;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  word-break: break-word;
+  color: black;
+  font-size: x-large;
+  
+}
+
+.Button:hover {
+  background-color: #888888;
+}
+  
+.subitem{
+
+  display: block;
+  width: 18%;
+  text-align: center;
+  background-color: #ffffff;
+  border: 1px solid #929292;
+  color: #000000;
+  word-break: break-word;
+  cursor: pointer;
+}
+
+.Header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #000000;
+  color: #fff;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  height:60px;
+  font-family: 'Open Sans Bold', sans-serif;
+  display: flex;
+  border: 1px solid #ffffff;
+  transition: width 0.3s ease; 
+  
+  
+}
+.titulo{
+  text-align: left;
+  margin-left: 2%;
+  margin-top: 1%;
+  margin-right: 5%;
+  cursor: pointer;
+}
+.botao {
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  text-align: center;
+  cursor: pointer;
+}
+.titulos{
+  width: 100%;
+  margin-top: 5%;
+  white-space: nowrap; /* Impede que o texto quebre em várias linhas */
+  overflow: hidden; /* Oculta o texto que ultrapassa o tamanho da div */
+  text-overflow: ellipsis; /* Exibe reticências (...) quando o texto é cortado */
+}
+.li{
+  list-style-type: none;
+  
+}
+.imagediv {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  justify-content: flex-end;
+}
+
+.image {
+  max-width: 50px;
+  max-height: 50px;
+  cursor: pointer;
+}
+.fullScreenModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Adiciona um fundo escuro translúcido */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; 
+}
+
+.modalContent {
+  width: 30%;
+  margin: auto;
+  margin-top: 8%;
+  margin-bottom: 5%;
+  flex-direction: column;
+  background-color: #575f6869; 
+  border-radius:3px; 
+  padding:1em;
+  justify-content: center;
+  border-radius: 50px;
+  padding: 20px; 
+}
+.bottomgroup{
+  background-color: #ffffff;
+  border: 1px solid #000000;
+  width: 120px;
+  height: 40px;
+  font-size: 15px;
+  transition: background-color 0.3s ease;
+  font-family: 'Poppins Bold', sans-serif;
+  color: black;
+  margin-left: 2%;
+}
+.bottomgroup:hover {
+  background-color:  #797979;
+}
+
+.bottomgroup:active {
+  background-color: #5c5c5c;
+}
+.input{
+  background-color:#000000;
+  border: 1px solid #ffffff; 
+  padding: 8px; 
+  width: 90%;
+  height: 30px;
+  font-size: 14px;
+  color: white;
+}
+.namegroup{
+  font-size: large;
+  text-align: left;
+  margin-bottom: 2%;
+  margin-left: 5%;
+  font-family: 'DM Sans Regular', sans-serif;
+  color: white;
+  font-size: 80%;
+}
+.botoes{
+ padding: 2%;
+  margin-top: 2%;
+  text-align: center;
+  align-items: center;
+}
+
+.mensage{
+  font-size:large;
+  text-align: center;
+  color: white;
+  white-space: nowrap; /* Impede que o texto quebre em várias linhas */
+  overflow: hidden; /* Oculta o texto que ultrapassa o tamanho da div */
+  text-overflow: ellipsis; /* Exibe reticências (...) quando o texto é cortado */
+
+}

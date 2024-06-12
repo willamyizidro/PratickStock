@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from '../css/Login.module.css';
+import { useHistory } from 'react-router-dom';
 
 function Login() {
 
@@ -29,6 +30,7 @@ function Login() {
     const [password, setSenha] = useState('');
     const [mensagem, setMensagem] = useState('');
     const [tipoLogin, setTipoLogin] = useState('Funcionario');
+    const history = useHistory();
 
     function logar(e) {
         e.preventDefault();
@@ -57,6 +59,8 @@ function Login() {
                 setUsuario('');
                 setSenha('');
                 setMensagem('Sucesso ao logar');
+                history.push('/');
+                window.location.reload();
             } else {
                 // Exibir mensagem de erro caso a requisição falhe
                 setMensagem('Erro ao logar, verifique seus dados.');
@@ -91,7 +95,7 @@ function Login() {
             checked={tipoLogin === 'Funcionario'}
             onChange={(e) => trocaUsuario('Funcionario')}
           />
-          Funcionário
+          FUNCIONARIO
         </label>
         <label className={styles.labelgroup}>
           <input
@@ -100,14 +104,14 @@ function Login() {
             checked={tipoLogin === 'Empresa'}
             onChange={(e) => trocaUsuario('Empresa')}
           />
-          Empresa
+          EMPRESA
         </label>
 
         <div className={styles.inputcontainer}>
           <div className={styles.inputgroup}>
             {tipoLogin === 'Funcionario' && (
             <>
-            <p className={styles.namegroup}>Login:</p>
+            <p className={styles.namegroup}>LOGIN</p>
             <input
               type="text"
               className={styles.input}
@@ -119,7 +123,7 @@ function Login() {
           )}
             {tipoLogin === 'Empresa' && (
             <>
-            <p className={styles.namegroup}>CNPJ:</p>
+            <p className={styles.namegroup}>CNPJ</p>
               <input type="text" 
               className={styles.input}
               placeholder="Digite seu CNPJ"
@@ -128,17 +132,17 @@ function Login() {
               required/>
               </>
             )}
-                        <p className={styles.namegroup}> SENHA</p>
-                        <input
-                            type="password"
-                            className={styles.input}
-                            placeholder="Digite a senha"
-                            value={password}
-                            onChange={e => setSenha(e.target.value)}
-                            required
-                        />
+            <p className={styles.namegroup}> SENHA</p>
+              <input
+              type="password"
+              className={styles.input}
+              placeholder="Digite a senha"
+              value={password}
+              onChange={e => setSenha(e.target.value)}
+              required
+              />
                         
-                    </div>
+                </div>
                 </div>
                 <div>
                     <p>{mensagem}</p>

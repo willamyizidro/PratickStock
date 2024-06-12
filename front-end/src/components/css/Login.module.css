@@ -38,6 +38,7 @@
     
 }
 body{
+    color: white;
     background-color: #e7e7e7;
 }
 
@@ -64,7 +65,6 @@ body{
     font-size: large;
     text-align: left;
     margin-bottom: 2%;
-    margin-left: 5%;
     font-family: 'DM Sans Regular', sans-serif;
     color: white;
     font-size: 80%;
@@ -115,7 +115,6 @@ h1{
     margin-top: 1%;
 }
 .divLateral{
-  background-color: black; /* Cor preta */
   width: 35%; /* Largura desejada */
   height: 100%; /* Altura igual à altura da página */
   position: absolute; /* Permanece fixo na tela */
