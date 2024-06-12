@@ -72,6 +72,8 @@ function NovaOS() {
         imei,
         valorservico: valorServico,
         valorpeca: valorProdutos,
+        relato_cliente: relato,
+        diagnostico,
         checklist
       });
       console.log('OS cadastrada com sucesso:', response.data);

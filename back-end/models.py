@@ -8,7 +8,7 @@ import re
 DATABASE = {
     'name': 'PratickStock',
     'user': 'postgres',
-    'password': '123456',
+    'password': 'postgres',
     #'host': 'localhost',  
     'port': 5432,     
 }
@@ -141,9 +141,9 @@ class Os(BaseModel):
     
 def obterCheckList(data):
     check = (CheckList.create(
-    camerafrontal = data['Camera Frontal'],
-    cameratraseira= data['Camera Traseira'],
-    altofalante= data['Alto Falante'],
+    camerafrontal = data['Camera frontal'],
+    cameratraseira= data['Camera traseira'],
+    altofalante= data['Alto falante'],
     microfone= data['Microfone'],
     foneauricular= data['Fone auricular'],
     carregamento= data['Carregamento'],
@@ -151,7 +151,7 @@ def obterCheckList(data):
     touch= data['Touch'],
     tela = data['Tela'],
     botaodeligar= data['Botao power'],
-    botoesdevolume= data['Botao volume'],
+    botoesdevolume= data['Botoes volume'],
     botaohome= data['Botao home'],
     wifi= data['Wifi'],
     bluethooth= data['Bluethooth'],

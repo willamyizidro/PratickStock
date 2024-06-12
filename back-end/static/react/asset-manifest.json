@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/react/static/css/main.04f69776.css",
-    "main.js": "/static/react/static/js/main.c033026c.js",
+    "main.js": "/static/react/static/js/main.49bdd743.js",
     "static/js/453.f7be5b23.chunk.js": "/static/react/static/js/453.f7be5b23.chunk.js",
     "static/media/Poppins-Medium.ttf": "/static/react/static/media/Poppins-Medium.673ed42382ab264e0bf5.ttf",
     "static/media/Poppins-Bold.ttf": "/static/react/static/media/Poppins-Bold.cdb29a5d7ccf57ff05a3.ttf",
@@ -10,11 +10,11 @@
     "static/media/DMSans-Regular.ttf": "/static/react/static/media/DMSans-Regular.36401d66ca415d09e170.ttf",
     "../../templates/index.html": "/static/react/../../templates/index.html",
     "main.04f69776.css.map": "/static/react/static/css/main.04f69776.css.map",
-    "main.c033026c.js.map": "/static/react/static/js/main.c033026c.js.map",
+    "main.49bdd743.js.map": "/static/react/static/js/main.49bdd743.js.map",
     "453.f7be5b23.chunk.js.map": "/static/react/static/js/453.f7be5b23.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.04f69776.css",
-    "static/js/main.c033026c.js"
+    "static/js/main.49bdd743.js"
   ]
 }

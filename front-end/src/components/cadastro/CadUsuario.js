@@ -110,7 +110,6 @@ function CadUsuario() {
 
     return (
         <div>
-        
             <form className={styles.form} onSubmit={cadastrarUsuario}>
                 <h1>CADASTRO DE CLIENTE</h1>
                 <div className={styles.inputcontainer}>
